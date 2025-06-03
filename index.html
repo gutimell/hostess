@@ -1,0 +1,277 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>App Visitante - Inicio</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
+    <style>
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: #f8f9fa;
+            display: flex;
+            justify-content: center;
+            align-items: flex-start;
+            min-height: 100vh;
+            padding-top: 1rem;
+            padding-bottom: 1rem;
+            margin: 0;
+        }
+        .mobile-container-wrapper { /* Nuevo contenedor para centrar todo */
+            max-width: 480px;
+            width: 100%;
+            margin: 0 auto; /* Centrado horizontal */
+        }
+        .mobile-container {
+            background-color: #ffffff;
+            box-shadow: 0 0 20px rgba(0,0,0,0.1);
+            border-radius: 15px;
+            display: flex;
+            flex-direction: column;
+            /* min-height: calc(100vh - 4rem); Puede ser problemático con el login fuera */
+        }
+        /* Estilos para el login container */
+        #login-container {
+            padding: 2rem;
+            text-align: center;
+            background-color: #ffffff;
+            border-radius: 15px; /* Para que coincida con mobile-container */
+            box-shadow: 0 0 20px rgba(0,0,0,0.1); /* Sombra también para el login standalone */
+        }
+        #login-container h1 {
+            font-size: 1.8rem;
+            color: #007bff;
+            margin-bottom: 0.5rem;
+        }
+        #login-container p {
+            margin-bottom: 1.5rem;
+            color: #6c757d;
+        }
+        #login-container .form-label {
+            font-weight: 500;
+        }
+        #login-container .btn-primary {
+            background-color: #007bff;
+            border-color: #007bff;
+            padding: 0.5rem 1.5rem;
+            font-size: 1rem;
+        }
+        #login-error-message {
+            margin-top: 1rem;
+            min-height: 1.2em; /* Espacio para el mensaje de error */
+        }
+
+        /* Estilos para el contenido principal de la app (botones de navegación) */
+        #main-app-content .app-header {
+            background-color: #007bff;
+            color: white;
+            padding: 1.5rem;
+            text-align: center;
+            border-top-left-radius: 15px;
+            border-top-right-radius: 15px;
+        }
+        #main-app-content .app-header h1 {
+            font-size: 1.8rem;
+            margin-bottom: 0;
+        }
+        #main-app-content .nav-buttons .btn {
+            font-size: 1.1rem;
+            padding: 0.8rem 1rem;
+            margin-bottom: 0.8rem;
+            border-radius: 8px;
+            display: flex;
+            align-items: center;
+            justify-content: flex-start; /* Alinea el ícono y texto a la izquierda */
+            transition: all 0.3s ease;
+        }
+        #main-app-content .nav-buttons .btn i {
+            font-size: 1.5rem;
+            margin-right: 1rem;
+            width: 24px; /* Ancho fijo para el ícono */
+            text-align: center;
+        }
+        #main-app-content .nav-buttons .btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 4px 8px rgba(0,0,0,0.15);
+        }
+        .btn-wifi { background-color: #17a2b8; border-color: #17a2b8; color: white; }
+        .btn-panoramas { background-color: #28a745; border-color: #28a745; color: white; }
+        .btn-outdoor { background-color: #fd7e14; border-color: #fd7e14; color: white; }
+        .btn-clima { background-color: #6f42c1; border-color: #6f42c1; color: white; }
+        .btn-info { background-color: #0dcaf0; border-color: #0dcaf0; color: white; }
+        .btn-sos { background-color: #dc3545; border-color: #dc3545; color: white; }
+        .btn-chat { background-color: #6c757d; border-color: #6c757d; color: white; }
+
+        #main-app-content .app-main-content-wrapper {
+            flex-grow: 1;
+            padding: 1.5rem;
+        }
+        #main-app-content .app-footer {
+            text-align: center;
+            padding: 1rem;
+            font-size: 0.9rem;
+            color: #6c757d;
+            border-top: 1px solid #e9ecef;
+            border-bottom-left-radius: 15px;
+            border-bottom-right-radius: 15px;
+        }
+        #main-app-content .app-footer .btn-logout {
+            margin-top: 0.5rem;
+        }
+
+        /* Ocultar por defecto */
+        #login-container, #main-app-content {
+            display: none;
+        }
+    </style>
+</head>
+<body>
+    <div class="mobile-container-wrapper">
+        <div id="login-container">
+            <h1><i class="bi bi-shield-lock-fill"></i> Acceso Seguro</h1>
+            <p>Por favor, ingresa tu clave para continuar.</p>
+            <form id="loginForm" class="needs-validation" novalidate>
+                <div class="mb-3">
+                    <label for="passwordInput" class="form-label visually-hidden">Clave de Acceso</label>
+                    <input type="password" class="form-control form-control-lg" id="passwordInput" placeholder="Clave de Acceso" required>
+                    <div class="invalid-feedback">
+                        Por favor, ingresa tu clave.
+                    </div>
+                </div>
+                <button type="submit" class="btn btn-primary btn-lg w-100">Ingresar</button>
+            </form>
+            <div id="login-error-message" class="text-danger mt-3"></div>
+        </div>
+
+        <div id="main-app-content" class="mobile-container">
+            <header class="app-header">
+                <h1>Bienvenido</h1>
+                <p class="lead mb-0">Tu guía digital</p>
+            </header>
+
+            <main class="app-main-content-wrapper">
+                <div class="nav-buttons d-grid gap-2">
+                    <a href="wifi.html" class="btn btn-wifi btn-lg w-100">
+                        <i class="bi bi-wifi"></i> WiFi
+                    </a>
+                    <a href="panoramas.html" class="btn btn-panoramas btn-lg w-100">
+                        <i class="bi bi-camera"></i> Panoramas
+                    </a>
+                     <a href="outdoor.html" class="btn btn-outdoor btn-lg w-100">
+                        <i class="bi bi-geo-alt-fill"></i> Outdoor
+                    </a>
+                    <a href="clima.html" class="btn btn-clima btn-lg w-100">
+                        <i class="bi bi-cloud-sun"></i> Clima
+                    </a>
+                    <a href="informacion.html" class="btn btn-info btn-lg w-100">
+                        <i class="bi bi-info-circle-fill"></i> Info General
+                    </a>
+                    <a href="sos.html" class="btn btn-sos btn-lg w-100">
+                        <i class="bi bi-exclamation-triangle-fill"></i> SOS
+                    </a>
+                    <a href="chat.html" class="btn btn-chat btn-lg w-100">
+                        <i class="bi bi-chat-dots-fill"></i> Chat Anfitrión
+                    </a>
+                </div>
+            </main>
+            <footer class="app-footer">
+                <p class="mb-1">&copy; 2024 App Visitante</p>
+                <button class="btn btn-sm btn-outline-secondary btn-logout" id="logoutButtonIndex">
+                    <i class="bi bi-box-arrow-right"></i> Salir de la Sesión
+                </button>
+            </footer>
+        </div>
+    </div>
+
+    <script src="js/auth.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+    <script>
+    document.addEventListener('DOMContentLoaded', function() {
+        const loginContainer = document.getElementById('login-container');
+        const mainAppContent = document.getElementById('main-app-content');
+        const loginForm = document.getElementById('loginForm');
+        const passwordInput = document.getElementById('passwordInput');
+        const loginErrorMessage = document.getElementById('login-error-message');
+        const logoutButtonIndex = document.getElementById('logoutButtonIndex');
+
+        function showLogin() {
+            loginContainer.style.display = 'block';
+            mainAppContent.style.display = 'none';
+            passwordInput.value = '';
+            loginErrorMessage.textContent = '';
+            passwordInput.focus();
+        }
+
+        function showApp() {
+            loginContainer.style.display = 'none';
+            mainAppContent.style.display = 'flex'; // 'flex' para que el footer se mantenga abajo
+        }
+
+        // Primero, ejecutar la protección de auth.js
+        // Para index.html, checkAuthAndProtect siempre debería devolver true,
+        // pero lo llamamos para mantener la consistencia y por si hay lógica futura.
+        if (typeof checkAuthAndProtect === 'function') {
+            checkAuthAndProtect();
+        } else {
+            console.error("Error crítico: checkAuthAndProtect no está definido. auth.js no se cargó correctamente.");
+            loginErrorMessage.textContent = 'Error de configuración. Intente más tarde.';
+            return;
+        }
+        
+        // Verificar estado de autenticación al cargar
+        if (sessionStorage.getItem('isAuthenticated') === 'true' && sessionStorage.getItem('selectedProfile')) {
+            showApp();
+        } else {
+            showLogin();
+        }
+
+        // Manejar envío del formulario de login
+        if (loginForm) {
+            loginForm.addEventListener('submit', function(event) {
+                event.preventDefault();
+                event.stopPropagation();
+
+                if (!loginForm.checkValidity()) {
+                    loginForm.classList.add('was-validated');
+                    return;
+                }
+                loginForm.classList.add('was-validated');
+
+                const enteredPassword = passwordInput.value;
+
+                if (typeof PROFILE_CREDENTIALS !== 'undefined' && PROFILE_CREDENTIALS.hasOwnProperty(enteredPassword)) {
+                    const profileId = PROFILE_CREDENTIALS[enteredPassword];
+                    sessionStorage.setItem('isAuthenticated', 'true');
+                    sessionStorage.setItem('selectedProfile', profileId);
+                    console.log("Login exitoso, perfil:", profileId);
+                    loginForm.classList.remove('was-validated');
+                    showApp();
+                } else {
+                    loginErrorMessage.textContent = 'Clave incorrecta. Inténtalo de nuevo.';
+                    sessionStorage.removeItem('isAuthenticated');
+                    sessionStorage.removeItem('selectedProfile');
+                    passwordInput.focus();
+                    passwordInput.value = ''; // Limpiar el campo después del error
+                    loginForm.classList.remove('was-validated'); // Resetear validación para el siguiente intento
+                }
+            });
+        }
+
+        // Botón de logout en index.html
+        if (logoutButtonIndex) {
+            logoutButtonIndex.addEventListener('click', function() {
+                if (typeof logout === 'function') {
+                    logout(); 
+                } else {
+                    console.error('Función logout() no encontrada.');
+                    sessionStorage.removeItem('isAuthenticated');
+                    sessionStorage.removeItem('selectedProfile');
+                    showLogin(); 
+                }
+            });
+        }
+    });
+    </script>
+</body>
+</html>
