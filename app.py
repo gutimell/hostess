@@ -217,7 +217,8 @@ def contacto():
     profile_data, guest_name, depto = get_profile_data()
     if not profile_data:
         return redirect(url_for('index'))
-    return render_template('contacto.html', profile=profile_data, guest_name=guest_name)
+    return render_template('contacto.html', profile=profile_data, guest_name=guest_name, depto=depto)
+
 
 @app.route('/referidos', methods=['GET', 'POST'])
 def referidos():
