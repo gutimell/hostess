@@ -1,0 +1,57 @@
+{% extends "layout.html" %}
+
+{% block title %}Refiere y Ahorra{% endblock %}
+
+{% block content %}
+<div class="row justify-content-center">
+    <div class="col-lg-8">
+        <div class="card text-center p-4 shadow-sm border-0">
+            <div class="card-body">
+                <i class="bi bi-gift-fill text-primary" style="font-size: 3rem;"></i>
+                <h1 class="card-title h2 my-3">Refiere y Ahorra</h1>
+                <p class="lead">¡Gana un <strong>5% de descuento</strong> por cada referido que se hospede con nosotros! Los descuentos son acumulables.</p>
+            </div>
+        </div>
+
+        <div class="card mt-4 p-4 shadow-sm border-0">
+            <div class="card-body">
+                <h3 class="h5">Tu Código de Referido Personal:</h3>
+                <div class="alert alert-success text-center">
+                    <strong class="fs-4">{{ codigo }}</strong>
+                </div>
+
+                <h3 class="h5 mt-4">Enlace de tu Alojamiento:</h3>
+                {% if profile.airbnb_link %}
+                    <p><a href="{{ profile.airbnb_link }}" target="_blank" rel="noopener noreferrer">{{ profile.airbnb_link }}</a></p>
+                    
+                    <div class="text-center mt-3">
+                        <img src="data:image/png;base64,{{ qr_airbnb }}" alt="Código QR para Airbnb" class="img-fluid rounded" style="max-width: 200px;">
+                        <p class="text-muted mt-2">Escanea para ir al anuncio</p>
+                        <!-- La funcionalidad de descarga de imagen QR con texto es más compleja en backend.
+                             Se puede añadir con librerías como Pillow. Por ahora, se muestra el QR simple. -->
+                    </div>
+                {% else %}
+                    <p class="text-muted">Link de Airbnb no disponible.</p>
+                {% endif %}
+            </div>
+        </div>
+
+        <div class="card mt-4 p-4 shadow-sm border-0">
+            <div class="card-body">
+                <h3 class="h5">Suscríbete para más Ofertas</h3>
+                <form method="post">
+                    <div class="input-group mb-3">
+                        <input type="email" class="form-control" name="email" placeholder="tu.correo@ejemplo.com" required>
+                        <button class="btn btn-primary" type="submit">Suscribirme</button>
+                    </div>
+                     {% if mensaje %}
+                        <div class="alert alert-success mt-3">
+                            {{ mensaje }}
+                        </div>
+                    {% endif %}
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

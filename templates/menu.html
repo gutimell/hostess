@@ -1,0 +1,36 @@
+{% extends "layout.html" %}
+
+{% block title %}Menú Principal{% endblock %}
+
+{% block content %}
+<div class="text-center mb-5">
+    <h1 class="display-5">¡Hola, {{ guest_name }}!</h1>
+    <p class="lead text-muted">Aquí tienes todo lo que necesitas para tu estadía.</p>
+</div>
+
+<div class="row row-cols-1 row-cols-sm-2 row-cols-lg-3 g-4">
+    {% set menu_items = [
+        ('wifi', 'Acceso WiFi', 'bi-wifi'),
+        ('panoramas', 'Panoramas', 'bi-camera'),
+        ('restaurantes', 'Restaurantes', 'bi-cup-hot-fill'),
+        ('sos', 'Números SOS', 'bi-heart-pulse-fill'),
+        ('clima', 'Clima en Ñuñoa', 'bi-cloud-sun-fill'),
+        ('eventos', 'Eventos en Santiago', 'bi-calendar-event-fill'),
+        ('contacto', 'Contacta a tu Host', 'bi-whatsapp'),
+        ('referidos', 'Refiere y Ahorra', 'bi-gift-fill')
+    ] %}
+
+    {% for route, label, icon in menu_items %}
+    <div class="col">
+        <a href="{{ url_for(route) }}" class="text-decoration-none">
+            <div class="card h-100 p-3 text-center menu-button border-0">
+                <div class="card-body d-flex flex-column justify-content-center align-items-center">
+                    <i class="{{ icon }} text-primary" style="font-size: 2.5rem;"></i>
+                    <h5 class="card-title mt-3 mb-0">{{ label }}</h5>
+                </div>
+            </div>
+        </a>
+    </div>
+    {% endfor %}
+</div>
+{% endblock %}

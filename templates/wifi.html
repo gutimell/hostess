@@ -1,0 +1,40 @@
+{% extends "layout.html" %}
+
+{% block title %}Acceso WiFi{% endblock %}
+
+{% block content %}
+<div class="row justify-content-center">
+    <div class="col-lg-6">
+        <div class="card text-center p-4 shadow-sm border-0">
+            <div class="card-body">
+                <i class="bi bi-wifi text-primary" style="font-size: 3rem;"></i>
+                <h1 class="card-title h2 my-3">Acceso WiFi</h1>
+                
+                {% if error %}
+                    <div class="alert alert-danger">
+                        <p class="mb-0 fw-bold">{{ error }}</p>
+                        <p class="mb-0 small">Por favor, contacta a tu anfitrión.</p>
+                    </div>
+                {% elif wifi_data and qr_image %}
+                    <p class="lead">Conéctate a la red:</p>
+                    <div class="alert alert-light border">
+                        <h3 class="h4 mb-1">{{ wifi_data.ssid }}</h3>
+                    </div>
+                    <p class="lead mt-3">Usando la contraseña:</p>
+                    <div class="alert alert-light border">
+                        <h3 class="h4 mb-1">{{ wifi_data.password }}</h3>
+                    </div>
+
+                    <p class="text-muted mt-4">O escanea este código para conectarte automáticamente:</p>
+                    <img src="data:image/png;base64,{{ qr_image }}" alt="Código QR para WiFi" class="img-fluid rounded shadow-sm" style="max-width: 250px;">
+                {% else %}
+                    {# Mensaje de error por defecto si algo inesperado ocurre #}
+                    <div class="alert alert-warning">
+                        No se pudo cargar la información del WiFi.
+                    </div>
+                {% endif %}
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

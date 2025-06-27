@@ -1,0 +1,40 @@
+{% extends "layout.html" %}
+
+{% block title %}{{ titulo }}{% endblock %}
+
+{% block content %}
+<h1 class="mb-4">{{ titulo }}</h1>
+
+<div class="accordion" id="itemsAccordion">
+    {% for item in items %}
+    <div class="accordion-item">
+        <h2 class="accordion-header" id="heading-{{ item.id }}">
+            <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapse-{{ item.id }}" aria-expanded="false" aria-controls="collapse-{{ item.id }}">
+                <strong>{{ item.titulo or item.nombre }}</strong>
+            </button>
+        </h2>
+        <div id="collapse-{{ item.id }}" class="accordion-collapse collapse" aria-labelledby="heading-{{ item.id }}" data-bs-parent="#itemsAccordion">
+            <div class="accordion-body">
+                {% if item.descripcion %}
+                    <p>{{ item.descripcion }}</p>
+                {% endif %}
+                {% if item.direccion %}
+                    <p><strong>Dirección:</strong> {{ item.direccion }}</p>
+                {% endif %}
+                {% if item.especialidad %}
+                    <p><strong>Especialidad:</strong> {{ item.especialidad }}</p>
+                {% endif %}
+                
+                {% if item.link or item.website %}
+                    <a href="{{ item.link or item.website }}" class="btn btn-outline-primary btn-sm" target="_blank" rel="noopener noreferrer">
+                        Visitar Sitio Web <i class="bi bi-box-arrow-up-right"></i>
+                    </a>
+                {% endif %}
+            </div>
+        </div>
+    </div>
+    {% else %}
+    <div class="alert alert-info">No hay información disponible por el momento.</div>
+    {% endfor %}
+</div>
+{% endblock %}

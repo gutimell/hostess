@@ -1,0 +1,44 @@
+{% extends "layout.html" %}
+
+{% block title %}Bienvenido{% endblock %}
+
+{% block content %}
+<div class="row justify-content-center">
+    <div class="col-lg-6 col-md-8">
+        <div class="card p-4 p-md-5 text-center shadow-lg border-0" style="margin-top: 10vh;">
+            <div class="card-body">
+                <i class="bi bi-key-fill text-primary" style="font-size: 4rem;"></i>
+                <h1 class="card-title h2 my-3">¡Bienvenid@!</h1>
+                <p class="text-muted mb-4">Ingresa tus datos para acceder a tu guía personalizada.</p>
+                
+                <form method="post">
+                    <div class="form-floating mb-3">
+                        <input type="text" class="form-control" id="depto" name="depto" placeholder="Ej: 1005" required>
+                        <label for="depto">Número de Departamento (1005 o 1006)</label>
+                    </div>
+                    <div class="form-floating mb-4">
+                        <input type="text" class="form-control" id="nombre" name="nombre" placeholder="Tu Nombre" required>
+                        <label for="nombre">Tu Nombre de Huésped</label>
+                    </div>
+
+                    {% if error %}
+                        <div class="alert alert-danger" role="alert">
+                            {{ error }}
+                        </div>
+                    {% endif %}
+
+                    <button type="submit" class="w-100 btn btn-primary btn-lg">Acceder</button>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}
+
+{% block scripts %}
+<script>
+    // Deshabilita el menú superior en la página de login
+    document.querySelector('header').style.display = 'none';
+    document.querySelector('footer').style.display = 'none';
+</script>
+{% endblock %}
