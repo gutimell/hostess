@@ -24,7 +24,7 @@ mock_data = {
     'precioso': { # Perfil para depto 1005
         'id': 'precioso',
         'nombre_perfil': 'Perfil Precioso (Depto 1005)',
-        'wifi': {'ssid': 'Gutimell_1005_5G', 'password': 'PreciosoWifi123'},
+        'wifi': {'ssid': 'Gutimell', 'password': 'GM1001SL'},
         'panoramas': [
             {'id': 'p1', 'titulo': 'Cerro San Cristóbal', 'descripcion': 'Disfruta de vistas panorámicas de Santiago, sube en teleférico o funicular.', 'link': 'https://www.parquemet.cl/'},
             {'id': 'p2', 'titulo': 'Barrio Italia', 'descripcion': 'Explora tiendas de diseño, anticuarios y acogedores cafés.', 'link': 'https://www.barrioitalia.com/'},
@@ -33,13 +33,13 @@ mock_data = {
             {'id': 'r1', 'nombre': 'Bocanáriz', 'direccion': 'José Victorino Lastarria 276, Santiago', 'website': 'https://bocanariz.cl/', 'especialidad': 'Vinos chilenos y tapas'},
             {'id': 'r2', 'nombre': 'Peumayén Ancestral Food', 'direccion': 'Constitución 136, Providencia', 'website': 'https://peumayenchile.cl/', 'especialidad': 'Comida ancestral chilena'},
         ],
-        'host': {'telefono': '+56911111111', 'whatsapp': '56911111111'},
-        'airbnb_link': 'https://www.airbnb.cl/rooms/TU_ID_DE_ALOJAMIENTO_1005' # <-- REEMPLAZA ESTO
+        'host': {'telefono': '+56938607776', 'whatsapp': '56938607776'},
+        'airbnb_link': 'https://airbnb.com/h/precioso-depto-en-nunoa' # <-- REEMPLAZA ESTO
     },
     'hermoso': { # Perfil para depto 1006
         'id': 'hermoso',
         'nombre_perfil': 'Perfil Hermoso (Depto 1006)',
-        'wifi': {'ssid': 'Gutimell_1006_Ext', 'password': 'HermosoWifi456'},
+        'wifi': {'ssid': 'Mellguti', 'password': 'GM1001SL'},
         'panoramas': [
             {'id': 'p4', 'titulo': 'Museo de la Memoria y los DDHH', 'descripcion': 'Un espacio para la reflexión sobre la historia reciente de Chile.', 'link': 'https://ww3.museodelamemoria.cl/'},
             {'id': 'p5', 'titulo': 'Parque Bicentenario', 'descripcion': 'Amplias áreas verdes, lagunas y esculturas en Vitacura.', 'link': 'https://www.parquebicentenario.cl/'},
@@ -47,8 +47,8 @@ mock_data = {
         'restaurantes': [
             {'id': 'r3', 'nombre': 'Como Agua Para Chocolate', 'direccion': 'Constitución 88, Providencia', 'website': 'https://comoaguaparachocolate.cl/', 'especialidad': 'Cocina chilena y latinoamericana'},
         ],
-        'host': {'telefono': '+56922222222', 'whatsapp': '56922222222'},
-        'airbnb_link': 'https://www.airbnb.cl/rooms/TU_ID_DE_ALOJAMIENTO_1006' # <-- REEMPLAZA ESTO
+        'host': {'telefono': '+56938607776', 'whatsapp': '56938607776'},
+        'airbnb_link': 'https://airbnb.com/h/hermoso-depto-en-nunoa' # <-- REEMPLAZA ESTO
     }
 }
 
