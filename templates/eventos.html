@@ -1,0 +1,34 @@
+{% extends "layout.html" %}
+
+{% block title %}Eventos en Santiago{% endblock %}
+
+{% block content %}
+<div class="row justify-content-center">
+    <div class="col-lg-8">
+        <div class="text-center mb-4">
+            <i class="bi bi-calendar-event-fill text-primary" style="font-size: 3rem;"></i>
+            <h1 class="h2 my-2">Eventos en Santiago</h1>
+            <p class="lead text-muted">Descubre qué está pasando en la ciudad.</p>
+        </div>
+        
+        <div class="list-group">
+            {% for evento in eventos %}
+            <div class="list-group-item list-group-item-action">
+                <div class="d-flex w-100 justify-content-between">
+                    <h5 class="mb-1">{{ evento.nombre }}</h5>
+                    <small class="text-muted">{{ evento.fecha }}</small>
+                </div>
+                <p class="mb-1"><strong>Lugar:</strong> {{ evento.lugar }}</p>
+            </div>
+            {% else %}
+            <div class="alert alert-info">
+                No hay eventos destacados por el momento.
+            </div>
+            {% endfor %}
+        </div>
+        <div class="alert alert-info mt-4 text-center small">
+            La lista de eventos es un ejemplo. En una versión final, se conectará a un servicio en tiempo real.
+        </div>
+    </div>
+</div>
+{% endblock %}
