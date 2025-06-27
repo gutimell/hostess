@@ -1,0 +1,37 @@
+{% extends "layout.html" %}
+
+{% block title %}Contacta a tu Host{% endblock %}
+
+{% block content %}
+<div class="row justify-content-center">
+    <div class="col-lg-6">
+        <div class="card text-center p-4 shadow-sm border-0">
+            <div class="card-body">
+                <i class="bi bi-headset text-primary" style="font-size: 3rem;"></i>
+                <h1 class="card-title h2 my-3">Contacta a tu Host</h1>
+                <p class="text-muted mb-4">
+                    Estamos aquí para ayudarte. No dudes en comunicarte si necesitas algo.
+                </p>
+                
+                {% if profile.host and profile.host.whatsapp and profile.host.telefono %}
+                    {# Prepara el mensaje para WhatsApp, codificándolo para la URL #}
+                    {% set mensaje_wsp = "Hola! Soy " ~ guest_name ~ ", tu huésped. Necesito ayuda con el alojamiento." | urlencode %}
+                    
+                    <div class="d-grid gap-3">
+                        <a href="https://wa.me/{{ profile.host.whatsapp }}?text={{ mensaje_wsp }}" target="_blank" rel="noopener noreferrer" class="btn btn-success btn-lg">
+                            <i class="bi bi-whatsapp me-2"></i> Chatear por WhatsApp
+                        </a>
+                        <a href="tel:{{ profile.host.telefono }}" class="btn btn-primary btn-lg">
+                            <i class="bi bi-telephone-fill me-2"></i> Llamar por Teléfono
+                        </a>
+                    </div>
+                {% else %}
+                    <div class="alert alert-warning">
+                        La información de contacto del anfitrión no está disponible.
+                    </div>
+                {% endif %}
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}
