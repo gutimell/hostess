@@ -32,6 +32,14 @@ mock_data = {
         'restaurantes': [
             {'id': 'r1', 'nombre': 'Bocanáriz', 'direccion': 'José Victorino Lastarria 276, Santiago', 'website': 'https://bocanariz.cl/', 'especialidad': 'Vinos chilenos y tapas'},
             {'id': 'r2', 'nombre': 'Peumayén Ancestral Food', 'direccion': 'Constitución 136, Providencia', 'website': 'https://peumayenchile.cl/', 'especialidad': 'Comida ancestral chilena'},
+            {'id': 'r3', 'nombre': 'Como Agua Para Chocolate', 'direccion': 'Constitución 88, Providencia', 'website': 'https://comoaguaparachocolate.cl/', 'especialidad': 'Cocina chilena y latinoamericana'},
+            {'id': 'r4', 'nombre': 'La Lucha Sanguchería Criolla', 'direccion': 'Jorge Washington 11, Ñuñoa (Plaza Ñuñoa)', 'website': 'https://lalucha.cl/', 'especialidad': 'Sándwiches peruanos'},
+            {'id': 'r5', 'nombre': 'Silvestre Bistro', 'direccion': 'Caupolicán 511, Providencia (Barrio Italia)', 'website': 'https://www.instagram.com/silvestrebistro/', 'especialidad': 'Cocina de mercado y ambiente acogedor'},
+            {'id': 'r6', 'nombre': 'Vurger Joint (Opción Vegana)', 'direccion': 'Av. Italia 1186, Providencia (Barrio Italia)', 'website': 'https://www.vurgerjoint.com/', 'especialidad': 'Hamburguesas y comida rápida vegana'},
+            {'id': 'r7', 'nombre': 'La Tecla', 'direccion': 'Jorge Washington 57, Ñuñoa (Plaza Ñuñoa)', 'website': 'https://www.latecla.cl/', 'especialidad': 'Cocina chilena y fusión'},
+            {'id': 'r8', 'nombre': 'CasaLuz', 'direccion': 'Av. Italia 805, Providencia (Barrio Italia)', 'website': 'https://www.casaluz.cl/', 'especialidad': 'Cocina de autor y coctelería'},
+            {'id': 'r9', 'nombre': 'Fuente Suiza', 'direccion': 'Av. Irarrázaval 3361, Ñuñoa', 'website': 'https://fuentesuiza.cl/', 'especialidad': 'Sándwiches clásicos y crudos'},
+
         ],
         'host': {'telefono': '+56938607776', 'whatsapp': '56938607776'},
         'airbnb_link': 'https://airbnb.com/h/precioso-depto-en-nunoa' # <-- REEMPLAZA ESTO
@@ -45,7 +53,15 @@ mock_data = {
             {'id': 'p5', 'titulo': 'Parque Bicentenario', 'descripcion': 'Amplias áreas verdes, lagunas y esculturas en Vitacura.', 'link': 'https://www.parquebicentenario.cl/'},
         ],
         'restaurantes': [
+            {'id': 'r1', 'nombre': 'Bocanáriz', 'direccion': 'José Victorino Lastarria 276, Santiago', 'website': 'https://bocanariz.cl/', 'especialidad': 'Vinos chilenos y tapas'},
+            {'id': 'r2', 'nombre': 'Peumayén Ancestral Food', 'direccion': 'Constitución 136, Providencia', 'website': 'https://peumayenchile.cl/', 'especialidad': 'Comida ancestral chilena'},
             {'id': 'r3', 'nombre': 'Como Agua Para Chocolate', 'direccion': 'Constitución 88, Providencia', 'website': 'https://comoaguaparachocolate.cl/', 'especialidad': 'Cocina chilena y latinoamericana'},
+            {'id': 'r4', 'nombre': 'La Lucha Sanguchería Criolla', 'direccion': 'Jorge Washington 11, Ñuñoa (Plaza Ñuñoa)', 'website': 'https://lalucha.cl/', 'especialidad': 'Sándwiches peruanos'},
+            {'id': 'r5', 'nombre': 'Silvestre Bistro', 'direccion': 'Caupolicán 511, Providencia (Barrio Italia)', 'website': 'https://www.instagram.com/silvestrebistro/', 'especialidad': 'Cocina de mercado y ambiente acogedor'},
+            {'id': 'r6', 'nombre': 'Vurger Joint (Opción Vegana)', 'direccion': 'Av. Italia 1186, Providencia (Barrio Italia)', 'website': 'https://www.vurgerjoint.com/', 'especialidad': 'Hamburguesas y comida rápida vegana'},
+            {'id': 'r7', 'nombre': 'La Tecla', 'direccion': 'Jorge Washington 57, Ñuñoa (Plaza Ñuñoa)', 'website': 'https://www.latecla.cl/', 'especialidad': 'Cocina chilena y fusión'},
+            {'id': 'r8', 'nombre': 'CasaLuz', 'direccion': 'Av. Italia 805, Providencia (Barrio Italia)', 'website': 'https://www.casaluz.cl/', 'especialidad': 'Cocina de autor y coctelería'},
+            {'id': 'r9', 'nombre': 'Fuente Suiza', 'direccion': 'Av. Irarrázaval 3361, Ñuñoa', 'website': 'https://fuentesuiza.cl/', 'especialidad': 'Sándwiches clásicos y crudos'},
         ],
         'host': {'telefono': '+56938607776', 'whatsapp': '56938607776'},
         'airbnb_link': 'https://airbnb.com/h/hermoso-depto-en-nunoa' # <-- REEMPLAZA ESTO
@@ -84,6 +100,7 @@ def index():
 
         if validar_huesped(depto, nombre):
             session['guest_name'] = nombre.strip().title()
+            session['depto'] = depto  # <-- Guardamos el número de depto
             if depto == '1005':
                 session['profile'] = 'precioso'
             elif depto == '1006':
@@ -97,15 +114,16 @@ def index():
 def get_profile_data():
     profile_id = session.get('profile')
     if not profile_id:
-        return None, None
+        return None, None, None
     
     guest_name = session.get('guest_name')
+    depto = session.get('depto')
     profile_data = mock_data.get(profile_id)
-    return profile_data, guest_name
+    return profile_data, guest_name, depto
 
 @app.route('/menu')
 def menu():
-    profile_data, guest_name = get_profile_data()
+    profile_data, guest_name, depto = get_profile_data()
     if not profile_data:
         return redirect(url_for('index'))
     return render_template('menu.html', profile=profile_data, guest_name=guest_name)
@@ -115,7 +133,7 @@ def menu():
 # ==============================================================================
 @app.route('/wifi')
 def wifi():
-    profile_data, guest_name = get_profile_data()
+    profile_data, guest_name, depto = get_profile_data()
     if not profile_data:
         return redirect(url_for('index'))
     
@@ -148,7 +166,7 @@ def wifi():
 
 @app.route('/panoramas')
 def panoramas():
-    profile_data, guest_name = get_profile_data()
+    profile_data, guest_name, depto = get_profile_data()
     if not profile_data:
         return redirect(url_for('index'))
     items = profile_data.get('panoramas', [])
@@ -156,7 +174,7 @@ def panoramas():
 
 @app.route('/restaurantes')
 def restaurantes():
-    profile_data, guest_name = get_profile_data()
+    profile_data, guest_name, depto = get_profile_data()
     if not profile_data:
         return redirect(url_for('index'))
     items = profile_data.get('restaurantes', [])
@@ -164,14 +182,14 @@ def restaurantes():
 
 @app.route('/sos')
 def sos():
-    profile_data, guest_name = get_profile_data()
+    profile_data, guest_name, depto = get_profile_data()
     if not profile_data:
         return redirect(url_for('index'))
     return render_template('sos.html', profile=profile_data, guest_name=guest_name, numeros=mock_sos)
 
 @app.route('/clima')
 def clima():
-    profile_data, guest_name = get_profile_data()
+    profile_data, guest_name, depto = get_profile_data()
     if not profile_data:
         return redirect(url_for('index'))
     mock_clima_data = {
@@ -185,7 +203,7 @@ def clima():
 
 @app.route('/eventos')
 def eventos():
-    profile_data, guest_name = get_profile_data()
+    profile_data, guest_name, depto = get_profile_data()
     if not profile_data:
         return redirect(url_for('index'))
     mock_eventos_data = [
@@ -196,14 +214,14 @@ def eventos():
 
 @app.route('/contacto')
 def contacto():
-    profile_data, guest_name = get_profile_data()
+    profile_data, guest_name, depto = get_profile_data()
     if not profile_data:
         return redirect(url_for('index'))
     return render_template('contacto.html', profile=profile_data, guest_name=guest_name)
 
 @app.route('/referidos', methods=['GET', 'POST'])
 def referidos():
-    profile_data, guest_name = get_profile_data()
+    profile_data, guest_name, depto = get_profile_data()
     if not profile_data:
         return redirect(url_for('index'))
 
