@@ -12,13 +12,20 @@
                 <p class="text-muted mb-4">Ingresa tus datos para acceder a tu guía personalizada.</p>
                 
                 <form method="post">
-                    <div class="form-floating mb-3">
-                        <input type="text" class="form-control" id="depto" name="depto" placeholder="Ej: 1005" required>
-                        <label for="depto">Número de Departamento (1005 o 1006)</label>
+                    <div class="mb-4">
+                        <label class="form-label fw-bold">1. Selecciona tu Departamento</label>
+                        <div class="d-grid gap-2 d-sm-block" role="group" aria-label="Selector de departamento">
+                            <input type="radio" class="btn-check" name="depto" id="depto1005" value="1005" autocomplete="off" required>
+                            <label class="btn btn-outline-primary btn-lg" for="depto1005">Depto 1005</label>
+
+                            <input type="radio" class="btn-check" name="depto" id="depto1006" value="1006" autocomplete="off" required>
+                            <label class="btn btn-outline-primary btn-lg" for="depto1006">Depto 1006</label>
+                        </div>
                     </div>
+
                     <div class="form-floating mb-4">
                         <input type="text" class="form-control" id="nombre" name="nombre" placeholder="Tu Nombre" required>
-                        <label for="nombre">Tu Nombre de Huésped</label>
+                        <label for="nombre">2. Ingresa tu Nombre de Huésped</label>
                     </div>
 
                     {% if error %}
@@ -27,7 +34,7 @@
                         </div>
                     {% endif %}
 
-                    <button type="submit" class="w-100 btn btn-primary btn-lg">Acceder</button>
+                    <button type="submit" class="w-100 btn btn-primary btn-lg fw-bold">Acceder</button>
                 </form>
             </div>
         </div>
