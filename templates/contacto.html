@@ -10,12 +10,12 @@
                 <i class="bi bi-headset text-primary" style="font-size: 3rem;"></i>
                 <h1 class="card-title h2 my-3">Contacta a tu Host</h1>
                 <p class="text-muted mb-4">
-                    Estamos aquí para ayudar a que te sientas como en casa. No dudes en comunicarte si necesitas algo durante tu estadía.
+                    Estamos aquí para ayudarte. No dudes en comunicarte si necesitas algo.
                 </p>
                 
                 {% if profile.host and profile.host.whatsapp and profile.host.telefono %}
-                    {# Prepara el mensaje para WhatsApp, codificándolo para la URL #}
-                    {% set mensaje_wsp = "Hola! Soy " ~ guest_name ~ ", tu huésped. Necesito ayuda con el alojamiento." | urlencode %}
+                    {# Prepara el mensaje para WhatsApp, incluyendo el depto, y lo codifica para la URL #}
+                    {% set mensaje_wsp = "Hola! Soy " ~ guest_name ~ " del depto " ~ depto ~ ". Necesito ayuda con el alojamiento." | urlencode %}
                     
                     <div class="d-grid gap-3">
                         <a href="https://wa.me/{{ profile.host.whatsapp }}?text={{ mensaje_wsp }}" target="_blank" rel="noopener noreferrer" class="btn btn-success btn-lg">
