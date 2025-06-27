@@ -1,17 +1,18 @@
-from flask import Flask, render_template, request, redirect, url_for, session
+from flask import Flask, render_template, request, redirect, url_for, session, Response
 import qrcode
 import base64
 from io import BytesIO
 from datetime import datetime
+from PIL import Image, ImageDraw, ImageFont
+import os
 
 app = Flask(__name__)
 app.secret_key = 'tu_clave_secreta_aqui_es_muy_importante'
 
 # ==============================================================================
-# ARCHIVO DE CONFIGURACIÓN FÁCIL DE EDITAR
+# ARCHIVO DE CONFIGURACIÓN FÁCIL DE EDITAR (TU VERSIÓN)
 # ==============================================================================
 
-# Aquí defines los huéspedes que tienen acceso.
 HUESPEDES_VALIDOS = [
     {'depto': '1005', 'nombre': 'Juan Carlos'},
     {'depto': '1005', 'nombre': 'Maria Rodriguez'},
@@ -19,7 +20,6 @@ HUESPEDES_VALIDOS = [
     {'depto': '1006', 'nombre': 'Ana Gonzalez'},
 ]
 
-# --- BASE DE DATOS (simulada con diccionarios de Python) ---
 mock_data = {
     'precioso': { # Perfil para depto 1005
         'id': 'precioso',
@@ -39,10 +39,9 @@ mock_data = {
             {'id': 'r7', 'nombre': 'La Tecla', 'direccion': 'Jorge Washington 57, Ñuñoa (Plaza Ñuñoa)', 'website': 'https://www.latecla.cl/', 'especialidad': 'Cocina chilena y fusión'},
             {'id': 'r8', 'nombre': 'CasaLuz', 'direccion': 'Av. Italia 805, Providencia (Barrio Italia)', 'website': 'https://www.casaluz.cl/', 'especialidad': 'Cocina de autor y coctelería'},
             {'id': 'r9', 'nombre': 'Fuente Suiza', 'direccion': 'Av. Irarrázaval 3361, Ñuñoa', 'website': 'https://fuentesuiza.cl/', 'especialidad': 'Sándwiches clásicos y crudos'},
-
         ],
         'host': {'telefono': '+56938607776', 'whatsapp': '56938607776'},
-        'airbnb_link': 'https://airbnb.com/h/precioso-depto-en-nunoa' # <-- REEMPLAZA ESTO
+        'airbnb_link': 'https://airbnb.com/h/precioso-depto-en-nunoa'
     },
     'hermoso': { # Perfil para depto 1006
         'id': 'hermoso',
@@ -64,7 +63,7 @@ mock_data = {
             {'id': 'r9', 'nombre': 'Fuente Suiza', 'direccion': 'Av. Irarrázaval 3361, Ñuñoa', 'website': 'https://fuentesuiza.cl/', 'especialidad': 'Sándwiches clásicos y crudos'},
         ],
         'host': {'telefono': '+56938607776', 'whatsapp': '56938607776'},
-        'airbnb_link': 'https://airbnb.com/h/hermoso-depto-en-nunoa' # <-- REEMPLAZA ESTO
+        'airbnb_link': 'https://airbnb.com/h/hermoso-depto-en-nunoa'
     }
 }
 
@@ -77,10 +76,8 @@ mock_sos = [
 
 @app.context_processor
 def inject_now():
-    """Hace que la función datetime.now() esté disponible en todas las plantillas como 'now'."""
     return {'now': datetime.now}
 
-# --- LÓGICA DE VALIDACIÓN ---
 def validar_huesped(depto, nombre):
     for huesped in HUESPEDES_VALIDOS:
         if huesped['depto'] == depto and huesped['nombre'].strip().lower() == nombre.strip().lower():
@@ -100,7 +97,7 @@ def index():
 
         if validar_huesped(depto, nombre):
             session['guest_name'] = nombre.strip().title()
-            session['depto'] = depto  # <-- Guardamos el número de depto
+            session['depto'] = depto
             if depto == '1005':
                 session['profile'] = 'precioso'
             elif depto == '1006':
@@ -127,42 +124,110 @@ def menu():
     if not profile_data:
         return redirect(url_for('index'))
     return render_template('menu.html', profile=profile_data, guest_name=guest_name)
+    
+@app.route('/vcard')
+def vcard():
+    profile_data, _, _ = get_profile_data()
+    if not profile_data or not profile_data.get('host'):
+        return "Host data not found", 404
 
-# ==============================================================================
-# FUNCIÓN WIFI CORREGIDA
-# ==============================================================================
+    host_phone = profile_data['host']['telefono'].replace('+', '').replace(' ', '')
+    host_name = "Alojamientos Gutimell"
+
+    vcard_content = f"""BEGIN:VCARD
+VERSION:3.0
+FN:{host_name}
+TEL;TYPE=CELL:{host_phone}
+END:VCARD"""
+
+    return Response(
+        vcard_content,
+        mimetype="text/vcard",
+        headers={"Content-disposition":
+                 "attachment; filename=Gutimell_Host.vcf"})
+
+@app.route('/referidos')
+def referidos():
+    profile_data, guest_name, depto = get_profile_data()
+    if not profile_data:
+        return redirect(url_for('index'))
+
+    fecha_hoy = datetime.now().strftime('%d%m%y')
+    nombre_codigo = guest_name.split(' ')[0].upper()
+    codigo_referido = f"{nombre_codigo}{fecha_hoy}"
+
+    try:
+        with open('referidos.txt', 'a') as f:
+            fecha_registro = datetime.now().strftime('%Y-%m-%d %H:%M:%S')
+            f.write(f"{fecha_registro},{depto},{guest_name},{codigo_referido}\n")
+    except Exception as e:
+        print(f"Error al escribir en referidos.txt: {e}")
+
+    airbnb_link = profile_data.get('airbnb_link', '')
+    
+    mensaje_wsp = (f"¡Hola! Te recomiendo este Airbnb en Ñuñoa. "
+                   f"Usa mi código *{codigo_referido}* para un descuento. "
+                   f"Link: {airbnb_link}").replace(" ", "%20")
+    
+    wsp_share_link = f"https://wa.me/?text={mensaje_wsp}"
+
+    qr_airbnb_str = None
+    if airbnb_link:
+        try:
+            qr_img = qrcode.make(airbnb_link)
+            qr_img = qr_img.resize((250, 250))
+            img_final = Image.new('RGB', (300, 400), color='white')
+            img_final.paste(qr_img, (25, 120))
+            draw = ImageDraw.Draw(img_final)
+            try:
+                font_titulo = ImageFont.truetype("arial.ttf", 20)
+                font_codigo = ImageFont.truetype("arialbd.ttf", 24)
+                font_pie = ImageFont.truetype("arial.ttf", 14)
+            except IOError:
+                font_titulo = ImageFont.load_default()
+                font_codigo = ImageFont.load_default()
+                font_pie = ImageFont.load_default()
+
+            draw.text((50, 20), "¡Gana un 5% DCTO!", fill='black', font=font_titulo)
+            draw.text((50, 50), "Código de Referido:", fill='black', font=font_titulo)
+            draw.text((70, 80), codigo_referido, fill='blue', font=font_codigo)
+            draw.text((60, 375), "Escanea para ir al Airbnb", fill='gray', font=font_pie)
+
+            buffered = BytesIO()
+            img_final.save(buffered, format="PNG")
+            qr_airbnb_str = base64.b64encode(buffered.getvalue()).decode("utf-8")
+        except Exception as e:
+            print(f"Error generando imagen de QR con Pillow: {e}")
+
+    return render_template('referidos.html', 
+                           profile=profile_data, 
+                           guest_name=guest_name,
+                           codigo=codigo_referido, 
+                           qr_airbnb=qr_airbnb_str,
+                           wsp_share_link=wsp_share_link)
+
+# (El resto de las rutas, como /wifi, /panoramas, etc., se mantienen igual que en la versión anterior)
+
 @app.route('/wifi')
 def wifi():
     profile_data, guest_name, depto = get_profile_data()
     if not profile_data:
         return redirect(url_for('index'))
-    
     wifi_data = profile_data.get('wifi')
-    
-    # Verifica si la configuración del WiFi está ausente o incompleta
     if not wifi_data or not wifi_data.get('ssid') or not wifi_data.get('password'):
-        # Pasa un mensaje de error a la plantilla en lugar de causar un error
         error_msg = "La información del WiFi no está configurada para este perfil."
         return render_template('wifi.html', profile=profile_data, guest_name=guest_name, wifi_data=None, qr_image=None, error=error_msg)
-
-    # Si la configuración es válida, procede
     try:
         wifi_string = f"WIFI:S:{wifi_data['ssid']};T:WPA;P:{wifi_data['password']};;"
         img = qrcode.make(wifi_string)
-        
         buffered = BytesIO()
         img.save(buffered, format="PNG")
         img_str = base64.b64encode(buffered.getvalue()).decode("utf-8")
-        
         return render_template('wifi.html', profile=profile_data, guest_name=guest_name, wifi_data=wifi_data, qr_image=img_str, error=None)
     except Exception as e:
-        # Atrapa cualquier otro error inesperado durante la generación del QR
         print(f"Error al generar el código QR: {e}")
         error_msg = "Ocurrió un error al generar el código QR."
         return render_template('wifi.html', profile=profile_data, guest_name=guest_name, wifi_data=wifi_data, qr_image=None, error=error_msg)
-# ==============================================================================
-# FIN DE LA FUNCIÓN CORREGIDA
-# ==============================================================================
 
 @app.route('/panoramas')
 def panoramas():
@@ -219,42 +284,13 @@ def contacto():
         return redirect(url_for('index'))
     return render_template('contacto.html', profile=profile_data, guest_name=guest_name, depto=depto)
 
-
-@app.route('/referidos', methods=['GET', 'POST'])
-def referidos():
-    profile_data, guest_name, depto = get_profile_data()
-    if not profile_data:
-        return redirect(url_for('index'))
-
-    fecha_hoy = datetime.now().strftime('%d%m%y')
-    nombre_codigo = guest_name.split(' ')[0].upper()
-    codigo_referido = f"{nombre_codigo}{fecha_hoy}"
-
-    mensaje_sub = None
-    if request.method == 'POST':
-        email = request.form.get('email')
-        print(f"Nuevo suscriptor: {email} (referido por {guest_name} con código {codigo_referido})")
-        mensaje_sub = "¡Gracias por suscribirte! Recibirás nuestras ofertas."
-
-    airbnb_link = profile_data.get('airbnb_link', '')
-    qr_airbnb_str = None
-    if airbnb_link:
-        img_airbnb = qrcode.make(airbnb_link)
-        buffered_airbnb = BytesIO()
-        img_airbnb.save(buffered_airbnb, format="PNG")
-        qr_airbnb_str = base64.b64encode(buffered_airbnb.getvalue()).decode("utf-8")
-
-    return render_template('referidos.html', 
-                           profile=profile_data, 
-                           guest_name=guest_name,
-                           codigo=codigo_referido, 
-                           qr_airbnb=qr_airbnb_str, 
-                           mensaje=mensaje_sub)
-
 @app.route('/logout')
 def logout():
     session.clear()
     return redirect(url_for('index'))
 
 if __name__ == '__main__':
+    if not os.path.exists('referidos.txt'):
+        with open('referidos.txt', 'w') as f:
+            f.write("Fecha,Depto,Nombre,CodigoReferido\n")
     app.run(debug=True)
