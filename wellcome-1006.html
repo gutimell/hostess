@@ -1,0 +1,148 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Información para Huéspedes - Airbnb</title>
+    <!-- Tailwind CSS CDN -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- Google Fonts - Inter -->
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700&display=swap" rel="stylesheet">
+    <style>
+        body {
+            font-family: 'Inter', sans-serif;
+            /* Fondo suave, tono madera claro un poco más intenso */
+            background-color: #f7f0e6; /* Un beige más pronunciado, pero aún suave */
+        }
+        .qr-container {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            /* Fondo del contenedor blanco puro para contraste */
+            background-color: #ffffff;
+            padding: 2.5rem; /* Aumentar el padding para más espacio */
+            border-radius: 1.5rem; /* Bordes más redondeados */
+            /* Sombra suave, con un toque cálido */
+            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.1); /* Sombra ligeramente más visible */
+            transition: transform 0.3s ease;
+        }
+        .qr-container:hover {
+            transform: translateY(-5px); /* Pequeño efecto hover */
+        }
+        .qr-code-box {
+            /* Borde sutil alrededor del QR en un tono madera más definido */
+            border: 2px solid #d4c8b6; /* Un tono beige-marrón suave, más visible */
+            padding: 1rem;
+            border-radius: 0.75rem;
+            background-color: #fcfcfc; /* Fondo del QR box */
+            display: inline-block; /* Para que el borde se ajuste al contenido */
+        }
+        /* Ajustar colores de texto para que combinen con los tonos cálidos y sean más legibles */
+        .text-gray-800 { color: #3d342b; } /* Marrón oscuro más intenso para títulos principales */
+        .text-gray-700 { color: #5a4f42; } /* Marrón medio más intenso para subtítulos */
+        .text-gray-600 { color: #7a6e60; } /* Marrón claro más intenso para párrafos */
+        .text-gray-500 { color: #9c9081; } /* Tono más claro pero definido para texto secundario */
+        .text-gray-400 { color: #b8ac9d; } /* Tono muy claro pero presente para texto pequeño */
+
+        @media (max-width: 768px) {
+            .qr-grid {
+                flex-direction: column;
+                gap: 2rem; /* Espacio entre los elementos en móvil */
+            }
+            .qr-container {
+                padding: 2rem;
+            }
+        }
+    </style>
+</head>
+<body class="flex items-center justify-center min-h-screen p-6">
+    <div class="bg-white rounded-3xl shadow-xl p-8 md:p-12 max-w-4xl w-full text-center">
+        <h1 class="text-4xl md:text-5xl font-extrabold text-gray-800 mb-6 leading-tight">
+            ¡Bienvenido, esperamos te sientas como en casa!
+        </h1>
+        <p class="text-lg md:text-xl text-gray-600 mb-10">
+            Escanea los códigos QR
+        </p>
+
+        <div class="qr-grid flex flex-col md:flex-row justify-around items-center gap-8 md:gap-12">
+            <!-- QR Code for Airbnb App -->
+            <div class="qr-container w-full md:w-1/2 lg:w-2/5">
+                <h2 class="text-2xl font-semibold text-gray-700 mb-6">Tu Guía de Estancia y Panoramas</h2>
+                <p class="text-md text-gray-500 mb-6">
+                    Escanea para acceder a nuestra aplicación de co-Anfitrión Gutimell.
+                </p>
+                <div id="qrcode-app" class="qr-code-box"></div>
+                <p class="text-sm text-gray-400 mt-4">
+                    hostess-6xd8.onrender.com
+                </p>
+            </div>
+
+            <!-- QR Code for Wi-Fi -->
+            <div class="qr-container w-full md:w-1/2 lg:w-2/5">
+                <h2 class="text-2xl font-semibold text-gray-700 mb-6">Conexión Wi-Fi Depto-1006</h2>
+                <p class="text-md text-gray-500 mb-6">
+                    Conéctate a nuestra red Wi-Fi para empezar a disfrutar.
+                </p>
+                <div id="qrcode-wifi" class="qr-code-box"></div>
+                <p class="text-sm text-gray-400 mt-4">
+                    Escanea para conectar automáticamente.
+                </p>
+            </div>
+        </div>
+
+        <p class="text-md text-gray-500 mt-12">
+            ¡Esperamos que disfrutes mucho tu estancia!
+        </p>
+    </div>
+
+    <script>
+        // Carga dinámicamente la librería qrcode.js y luego ejecuta el código
+        const script = document.createElement('script');
+        script.src = "https://cdnjs.cloudflare.com/ajax/libs/qrcode.js/1.0.0/qrcode.min.js";
+        script.onload = function() {
+            // Función para generar el código QR
+            function generateQRCode(elementId, text, size = 200) {
+                new QRCode(document.getElementById(elementId), {
+                    text: text,
+                    width: size,
+                    height: size,
+                    colorDark : "#333333", // Color oscuro para el QR
+                    colorLight : "#ffffff", // Color claro para el fondo del QR
+                    correctLevel : QRCode.CorrectLevel.H // Nivel de corrección de error alto
+                });
+            }
+
+            // Generar QR para la aplicación web de Airbnb
+            const airbnbAppUrl = "https://hostess-6xd8.onrender.com";
+            generateQRCode('qrcode-app', airbnbAppUrl, 200);
+
+            // --- INSTRUCCIONES PARA EL CÓDIGO QR DE WI-FI ---
+            // 1. Reemplaza 'TU_SSID_AQUI' con el nombre exacto de tu red Wi-Fi.
+            // 2. Reemplaza 'TU_CONTRASEÑA_AQUI' con la contraseña de tu red Wi-Fi.
+            // 3. Si tu red no tiene contraseña, puedes dejar la parte 'P:;' vacía (P:;).
+            //    Si es una red abierta sin cifrado, usa 'T:nopass;S:TU_SSID_AQUI;;'
+            //    Si es WPA/WPA2 (lo más común), usa 'T:WPA;S:TU_SSID_AQUI;P:TU_CONTRASEÑA_AQUI;;'
+            //    Si es WEP, usa 'T:WEP;S:TU_SSID_AQUI;P:TU_CONTRASEÑA_AQUI;;'
+
+            const wifiSSID = 'Mellguti'; // <-- ¡IMPORTANTE! Reemplaza esto con el nombre de tu red Wi-Fi
+            const wifiPassword = 'GM1001SL'; // <-- ¡IMPORTANTE! Reemplaza esto con la contraseña de tu red Wi-Fi
+            const wifiEncryption = 'WPA'; // O 'WEP', 'nopass' (para red abierta)
+
+            // Formato para el QR de Wi-Fi: WIFI:T:<encryption type>;S:<ssid>;P:<password>;;
+            const wifiQrData = `WIFI:T:${wifiEncryption};S:${wifiSSID};P:${wifiPassword};;`;
+
+            // Generar QR para la conexión Wi-Fi
+            generateQRCode('qrcode-wifi', wifiQrData, 200);
+
+            // Mensaje para el usuario si los datos de Wi-Fi no se han actualizado
+            if (wifiSSID === 'TU_SSID_AQUI' || wifiPassword === 'TU_CONTRASEÑA_AQUI') {
+                console.warn("¡Atención! Por favor, actualiza el SSID y la contraseña de Wi-Fi en el código para que el QR de Wi-Fi funcione correctamente.");
+                // Opcional: Mostrar un mensaje en la UI para el anfitrión, no para el huésped.
+                // document.getElementById('qrcode-wifi').innerHTML = '<p class="text-red-500 text-center mt-4">Por favor, edita el código para añadir tu Wi-Fi SSID y contraseña.</p>';
+            }
+        };
+        document.body.appendChild(script);
+    </script>
+</body>
+</html>
