@@ -3,15 +3,80 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>{% block title %}{% endblock %} - Guía Gutimell</title>
+    <title>{% block title %}{% endblock %} - GutiGenius</title>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700&display=swap" rel="stylesheet">
     <style>
-        body { background-color: #f0f8ff; font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; }
-        .card, .btn { border-radius: 0.8rem; }
-        .menu-button { transition: transform 0.2s; box-shadow: 0 4px 6px rgba(0,0,0,0.1); }
-        .menu-button:hover { transform: scale(1.05); box-shadow: 0 6px 12px rgba(0,0,0,0.15); }
-        .accordion-button:not(.collapsed) { color: #0c63e4; background-color: #e7f1ff; }
+        :root {
+            --gg-dark-blue: #0A2B4C; /* Azul oscuro del logo */
+            --gg-yellow: #FFC107;    /* Amarillo del logo */
+            --gg-teal: #20c997;      /* Turquesa del logo */
+            --gg-light-gray: #f8f9fa;
+            --gg-text: #212529;
+        }
+
+        body { 
+            background-color: var(--gg-light-gray); 
+            font-family: 'Poppins', sans-serif;
+            color: var(--gg-text);
+        }
+        
+        .btn-primary {
+            background-color: var(--gg-dark-blue);
+            border-color: var(--gg-dark-blue);
+        }
+        .btn-primary:hover {
+            background-color: #08223c;
+            border-color: #08223c;
+        }
+        .btn-outline-primary {
+            color: var(--gg-dark-blue);
+            border-color: var(--gg-dark-blue);
+        }
+        .btn-outline-primary:hover, .btn-check:checked+.btn-outline-primary {
+            background-color: var(--gg-dark-blue);
+            color: white;
+        }
+        
+        .text-primary { color: var(--gg-dark-blue) !important; }
+        .text-accent { color: var(--gg-yellow) !important; }
+        
+        .card, .btn, .form-control, .list-group-item { border-radius: 0.8rem; }
+        
+        .menu-button { 
+            transition: transform 0.2s, box-shadow 0.2s; 
+            box-shadow: 0 4px 6px rgba(0,0,0,0.05);
+            border: 1px solid #dee2e6;
+        }
+        .menu-button:hover { 
+            transform: translateY(-5px); 
+            box-shadow: 0 8px 15px rgba(0,0,0,0.1);
+        }
+        .menu-button .icon-circle {
+            background-color: #e9ecef;
+            width: 60px;
+            height: 60px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-bottom: 1rem;
+            color: var(--gg-dark-blue);
+            transition: background-color 0.2s, color 0.2s;
+        }
+        .menu-button:hover .icon-circle {
+            background-color: var(--gg-yellow);
+            color: var(--gg-dark-blue);
+        }
+        
+        .accordion-button:not(.collapsed) { 
+            color: var(--gg-dark-blue); 
+            background-color: #fef8e4; 
+            font-weight: 600;
+        }
     </style>
 </head>
 <body>
@@ -19,8 +84,7 @@
         <div class="container">
             <div class="d-flex flex-wrap align-items-center justify-content-between">
                 <a href="{{ url_for('menu') if session.get('profile') else '#' }}" class="d-flex align-items-center mb-2 mb-lg-0 text-dark text-decoration-none">
-                    <i class="bi bi-house-heart-fill me-2" style="font-size: 2rem; color: #0d6efd;"></i>
-                    <span class="fs-4">Guía Gutimell</span>
+                    <img src="{{ url_for('static', filename='gutigenius.png') }}" alt="GutiGenius Logo" style="height: 40px;">
                 </a>
 
                 {% if session.get('profile') %}
@@ -42,11 +106,10 @@
         {% block content %}{% endblock %}
     </main>
     
-    <footer class="text-center text-muted py-4">
-        <p>&copy; {{ now().year }} Alojamientos Gutimell. ¡Disfruta tu estadía!</p>
+    <footer class="text-center text-muted py-4 mt-auto">
+        <p>&copy; {{ now().year }} GutiGenius. ¡Disfruta tu estadía!</p>
     </footer>
 
-    <!-- Bootstrap 5 JS -->
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
     {% block scripts %}{% endblock %}
 </body>
