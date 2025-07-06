@@ -284,6 +284,13 @@ def contacto():
         return redirect(url_for('index'))
     return render_template('contacto.html', profile=profile_data, guest_name=guest_name, depto=depto)
 
+# --- NUEVA RUTA PARA PÁGINA EN CONSTRUCCIÓN ---
+@app.route('/en_construccion')
+def en_construccion():
+    profile_data, guest_name, depto = get_profile_data()
+    # No necesitamos verificar si hay profile_data, ya que esta página es genérica
+    return render_template('en_construccion.html', guest_name=guest_name)
+
 @app.route('/logout')
 def logout():
     session.clear()
