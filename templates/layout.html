@@ -84,7 +84,7 @@
         <div class="container">
             <div class="d-flex flex-wrap align-items-center justify-content-between">
                 <a href="{{ url_for('menu') if session.get('profile') else '#' }}" class="d-flex align-items-center mb-2 mb-lg-0 text-dark text-decoration-none">
-                    <img src="{{ url_for('static', filename='gutigenius.png') }}" alt="GutiGenius Logo" style="height: 40px;">
+                    <img src="{{ url_for('static', filename='gutigenius_abc.png') }}" alt="GutiGenius Logo" style="height: 40px;">
                 </a>
 
                 {% if session.get('profile') %}
@@ -94,7 +94,7 @@
                         {{ guest_name }}
                     </a>
                     <ul class="dropdown-menu text-small">
-                        <li><a class="dropdown-item" href="{{ url_for('logout') }}">Salir y cambiar de usuario</a></li>
+                        <li><a class="dropdown-item" href="{{ url_for('logout') }}">Cerrar sesion</a></li>
                     </ul>
                 </div>
                 {% endif %}
