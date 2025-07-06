@@ -1,15 +1,15 @@
 {% extends "layout.html" %}
 
-{% block title %}Bienvenido{% endblock %}
+{% block title %}Bienvenido a GutiGenius{% endblock %}
 
 {% block content %}
 <div class="row justify-content-center">
     <div class="col-lg-6 col-md-8">
         <div class="card p-4 p-md-5 text-center shadow-lg border-0" style="margin-top: 10vh;">
             <div class="card-body">
-                <i class="bi bi-key-fill text-primary" style="font-size: 4rem;"></i>
-                <h1 class="card-title h2 my-3">¡Bienvenid@!</h1>
-                <p class="text-muted mb-4">Ingresa tus datos para acceder a tu guía personalizada.</p>
+                <i class="bi bi-lightbulb-fill text-accent" style="font-size: 4rem;"></i>
+                <h1 class="card-title h2 my-3 fw-bold">Bienvenid@ a Guti<span class="text-primary">Genius</span></h1>
+                <p class="text-muted mb-4">Tu guía inteligente para una estadía perfecta.</p>
                 
                 <form method="post">
                     <div class="mb-4">
@@ -45,7 +45,11 @@
 {% block scripts %}
 <script>
     // Deshabilita el menú superior en la página de login
-    document.querySelector('header').style.display = 'none';
-    document.querySelector('footer').style.display = 'none';
+    document.addEventListener('DOMContentLoaded', function() {
+        const header = document.querySelector('header');
+        const footer = document.querySelector('footer');
+        if (header) header.style.display = 'none';
+        if (footer) footer.style.display = 'none';
+    });
 </script>
 {% endblock %}
