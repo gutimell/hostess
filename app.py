@@ -15,9 +15,9 @@ app.secret_key = 'tu_clave_secreta_aqui_es_muy_importante'
 
 HUESPEDES_VALIDOS = [
     {'depto': '1005', 'nombre': 'Juan Carlos'},
-    {'depto': '1005', 'nombre': 'Maria Rodriguez'},
-    {'depto': '1006', 'nombre': 'Pedro Pascal'},
-    {'depto': '1006', 'nombre': 'Ana Gonzalez'},
+    {'depto': '1005', 'nombre': 'Jeremy'},
+    {'depto': '1006', 'nombre': 'Gisella'},
+    {'depto': '1006', 'nombre': 'Katty'},
 ]
 
 mock_data = {
