@@ -10,15 +10,15 @@
 
 <div class="row row-cols-1 row-cols-sm-2 row-cols-lg-3 g-4">
     {# Aquí puedes activar (True) o desactivar (False) cada botón del menú #}
+    {# ('eventos', 'Eventos en Santiago', 'bi-calendar-event-fill', False), #}
     {% set menu_items = [
         ('wifi', 'Acceso WiFi', 'bi-wifi', True),
         ('panoramas', 'Panoramas', 'bi-camera', True),
         ('restaurantes', 'Restaurantes', 'bi-cup-hot-fill', True),
         ('contacto', 'Contacta a tu Host', 'bi-whatsapp', True),
         ('sos', 'Números SOS', 'bi-heart-pulse-fill', True),
-        ('clima', 'Clima en Ñuñoa', 'bi-cloud-sun-fill', TruFalsee),
-        ('eventos', 'Eventos en Santiago', 'bi-calendar-event-fill', False),
-        
+        ('clima', 'Clima en Ñuñoa', 'bi-cloud-sun-fill', Falsee),
+        ('checkout', 'Check-Out', 'bi-box-arrow-right', True)
         ('referidos', 'Refiere y Ahorra', 'bi-gift-fill', False)
     ] %}
 

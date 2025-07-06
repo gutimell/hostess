@@ -301,6 +301,14 @@ def en_construccion():
     # No necesitamos verificar si hay profile_data, ya que esta página es genérica
     return render_template('en_construccion.html', guest_name=guest_name)
 
+@app.route('/checkout')
+def checkout():
+    profile_data, guest_name, depto = get_profile_data()
+    if not profile_data:
+        return redirect(url_for('index'))
+    return render_template('checkout.html', profile=profile_data, guest_name=guest_name, depto=depto)
+
+
 @app.route('/logout')
 def logout():
     session.clear()
