@@ -27,7 +27,12 @@ mock_data = {
         'wifi': {'ssid': 'Gutimell', 'password': 'GM1001SL'},
         'panoramas': [
             {'id': 'p1', 'titulo': 'Cerro San Cristóbal', 'descripcion': 'Disfruta de vistas panorámicas de Santiago, sube en teleférico o funicular.', 'link': 'https://www.parquemet.cl/'},
-            {'id': 'p2', 'titulo': 'Barrio Italia', 'descripcion': 'Explora tiendas de diseño, anticuarios y acogedores cafés.', 'link': 'https://www.barrioitalia.com/'},
+            {'id': 'p2', 'titulo': 'Teleférico Santiago', 'descripcion': 'Las mejores vistas de la ciudad', 'link': 'https://turistik.com/cerro-san-cristobal/teleferico-santiago/'},
+            {'id': 'p3', 'titulo': 'Funicular Santiago', 'descripcion': 'Un viaje en ascensor patrimonial', 'link': 'https://turistik.com/cerro-san-cristobal/funicular-santiago/'},
+            {'id': 'p4', 'titulo': 'Barrio Italia', 'descripcion': 'Explora tiendas de diseño, anticuarios y acogedores cafés.', 'link': 'https://www.barrioitalia.com/'},
+            {'id': 'p5', 'titulo': 'Plaza Ñuñoa', 'descripcion': 'Un lugar ideal para pasear, con cafés y restaurantes alrededor.', 'link': 'https://www.nunoa.cl/'},
+            {'id': 'p6', 'titulo': 'Museo Nacional de Bellas Artes', 'descripcion': 'Descubre obras de arte chileno e internacional en un hermoso edificio.', 'link': 'https://www.mnba.cl/'},
+            {'id': 'p7', 'titulo': 'Parque Bicentenario', 'descripcion': 'Amplias áreas verdes, lagunas y esculturas en Vitacura.', 'link': 'https://www.parquebicentenario.cl/'},
         ],
         'restaurantes': [
             {'id': 'r1', 'nombre': 'Bocanáriz', 'direccion': 'José Victorino Lastarria 276, Santiago', 'website': 'https://bocanariz.cl/', 'especialidad': 'Vinos chilenos y tapas'},
@@ -48,8 +53,13 @@ mock_data = {
         'nombre_perfil': 'Perfil Hermoso (Depto 1006)',
         'wifi': {'ssid': 'Mellguti', 'password': 'GM1001SL'},
         'panoramas': [
-            {'id': 'p4', 'titulo': 'Museo de la Memoria y los DDHH', 'descripcion': 'Un espacio para la reflexión sobre la historia reciente de Chile.', 'link': 'https://ww3.museodelamemoria.cl/'},
-            {'id': 'p5', 'titulo': 'Parque Bicentenario', 'descripcion': 'Amplias áreas verdes, lagunas y esculturas en Vitacura.', 'link': 'https://www.parquebicentenario.cl/'},
+            {'id': 'p1', 'titulo': 'Cerro San Cristóbal', 'descripcion': 'Disfruta de vistas panorámicas de Santiago, sube en teleférico o funicular.', 'link': 'https://www.parquemet.cl/'},
+            {'id': 'p2', 'titulo': 'Teleférico Santiago', 'descripcion': 'Las mejores vistas de la ciudad', 'link': 'https://turistik.com/cerro-san-cristobal/teleferico-santiago/'},
+            {'id': 'p3', 'titulo': 'Funicular Santiago', 'descripcion': 'Un viaje en ascensor patrimonial', 'link': 'https://turistik.com/cerro-san-cristobal/funicular-santiago/'},
+            {'id': 'p4', 'titulo': 'Barrio Italia', 'descripcion': 'Explora tiendas de diseño, anticuarios y acogedores cafés.', 'link': 'https://www.barrioitalia.com/'},
+            {'id': 'p5', 'titulo': 'Plaza Ñuñoa', 'descripcion': 'Un lugar ideal para pasear, con cafés y restaurantes alrededor.', 'link': 'https://www.nunoa.cl/'},
+            {'id': 'p6', 'titulo': 'Museo Nacional de Bellas Artes', 'descripcion': 'Descubre obras de arte chileno e internacional en un hermoso edificio.', 'link': 'https://www.mnba.cl/'},
+            {'id': 'p7', 'titulo': 'Parque Bicentenario', 'descripcion': 'Amplias áreas verdes, lagunas y esculturas en Vitacura.', 'link': 'https://www.parquebicentenario.cl/'},
         ],
         'restaurantes': [
             {'id': 'r1', 'nombre': 'Bocanáriz', 'direccion': 'José Victorino Lastarria 276, Santiago', 'website': 'https://bocanariz.cl/', 'especialidad': 'Vinos chilenos y tapas'},
