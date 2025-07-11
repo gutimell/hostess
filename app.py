@@ -14,9 +14,9 @@ app.secret_key = 'tu_clave_secreta_aqui_es_muy_importante'
 # ==============================================================================
 
 HUESPEDES_VALIDOS = [
-    {'depto': '1005', 'nombre': 'Juan Carlos'},
+    {'depto': '1005', 'nombre': 'Vito'},
     {'depto': '1005', 'nombre': 'Jeremy'},
-    {'depto': '1006', 'nombre': 'Gisella'},
+    {'depto': '1006', 'nombre': 'Vanessa'},
     {'depto': '1006', 'nombre': 'Katty'},
 ]
 
