@@ -17,7 +17,7 @@ HUESPEDES_VALIDOS = [
     {'depto': '1005', 'nombre': 'admin'},
 {'depto': '1005', 'nombre': 'AX'},
 {'depto': '1005', 'nombre': 'Jeremy'},
-{'depto': '1005', 'nombre': 'Paola'},
+{'depto': '1005', 'nombre': 'Gabriela'},
 {'depto': '1005', 'nombre': 'Cihara'},
 
     {'depto': '1006', 'nombre': 'admin'},
