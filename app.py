@@ -23,7 +23,7 @@ HUESPEDES_VALIDOS = [
     {'depto': '1006', 'nombre': 'admin'},
 {'depto': '1006', 'nombre': 'Cristian'},
 {'depto': '1006', 'nombre': 'Victor'},
-{'depto': '1006', 'nombre': 'Giselle'},
+{'depto': '1006', 'nombre': 'Habib'},
 ]
 
 mock_data = {
